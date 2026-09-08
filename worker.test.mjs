@@ -1,0 +1,4 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {poll,relay} from './worker.mjs';
+test('checkpoint advances only after ingestion accepts records',async()=>{const state={p:{cursor:'old'}};await assert.rejects(()=>poll('p',state,async()=>[{signature:'new'}],async()=>{throw Error('network failure')},()=>{throw Error('must not checkpoint')}));assert.equal(state.p.cursor,'old')});
+test('relayed transactions are oldest first and errors excluded',async()=>{const state={},sent=[];await poll('p',state,async()=>[{signature:'new'},{signature:'failed',err:{}},{signature:'old'}],async s=>sent.push(...s),()=>{});assert.deepEqual(sent,['old','new']);assert.equal(state.p.cursor,'new')});
+test('web auth failures cannot masquerade as accepted ingestion',async()=>{await assert.rejects(()=>relay(['sig'],'https://example.test','token',async()=>({ok:false,status:401})),/401/)});
