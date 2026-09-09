@@ -1,6 +1,6 @@
 {
   "name": "astratrader-worker",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "private": true,
   "type": "module",
   "engines": {
@@ -9,7 +9,7 @@
   "scripts": {
     "start": "node realtime.mjs",
     "start:backfill": "node backfill.mjs",
-    "test": "node --test worker.test.mjs"
+    "test": "node --test worker.test.mjs && node --check realtime.mjs && node --check backfill.mjs"
   },
   "dependencies": {
     "@solana/web3.js": "1.98.4",
