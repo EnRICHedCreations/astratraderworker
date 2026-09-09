@@ -1,13 +1,14 @@
 {
   "name": "astratrader-worker",
-  "version": "0.2.3",
+  "version": "0.3.0",
   "private": true,
   "type": "module",
   "engines": {
     "node": ">=24"
   },
   "scripts": {
-    "start": "node worker.mjs",
+    "start": "node realtime.mjs",
+    "start:backfill": "node backfill.mjs",
     "test": "node --test worker.test.mjs"
   },
   "dependencies": {
